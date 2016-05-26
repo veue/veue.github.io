@@ -4,17 +4,27 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Archives: 2016/5 | 于云鹏</title>
+  <title>NSURLSession无法实现断点续传下载的问题解决 | 于云鹏</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="于云鹏">
-<meta property="og:url" content="http://yoursite.com/archives/2016/05/index.html">
+  <meta name="description" content="最近在做一个类似网盘的项目，需要实现文件的上传和下载。我自己用NSURLSession封装了一个下载工具类来使用，但是遇到了无法断点下载的问题。我们先来看看NSURLSession的暂停方法。
+[task cancelByProducingResumeData:^(NSData * _Nullable resumeData) {  
+    self.suspendBlock = suspend;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NSURLSession无法实现断点续传下载的问题解决">
+<meta property="og:url" content="http://yoursite.com/2015/12/16/NSURLSession无法实现断点续传下载的问题解决/index.html">
 <meta property="og:site_name" content="于云鹏">
-<meta property="og:description">
+<meta property="og:description" content="最近在做一个类似网盘的项目，需要实现文件的上传和下载。我自己用NSURLSession封装了一个下载工具类来使用，但是遇到了无法断点下载的问题。我们先来看看NSURLSession的暂停方法。
+[task cancelByProducingResumeData:^(NSData * _Nullable resumeData) {  
+    self.suspendBlock = suspend;">
+<meta property="og:image" content="http://img.blog.csdn.net/20151201114006808?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20151201114031544?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2016-05-26T13:47:09.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="于云鹏">
-<meta name="twitter:description">
+<meta name="twitter:title" content="NSURLSession无法实现断点续传下载的问题解决">
+<meta name="twitter:description" content="最近在做一个类似网盘的项目，需要实现文件的上传和下载。我自己用NSURLSession封装了一个下载工具类来使用，但是遇到了无法断点下载的问题。我们先来看看NSURLSession的暂停方法。
+[task cancelByProducingResumeData:^(NSData * _Nullable resumeData) {  
+    self.suspendBlock = suspend;">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20151201114006808?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
   
     <link rel="alternative" href="/atom.xml" title="于云鹏" type="application/atom+xml">
   
@@ -184,49 +194,102 @@
 	</div>
 </nav>
 
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-NSURLSession无法实现断点续传下载的问题解决" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/05/16/hello-world/" class="archive-article-date">
-  	<time datetime="2016-05-16T12:51:24.000Z" itemprop="datePublished">May 16</time>
+    <div class="article-meta">
+      <a href="/2015/12/16/NSURLSession无法实现断点续传下载的问题解决/" class="article-date">
+  	<time datetime="2015-12-16T13:16:23.000Z" itemprop="datePublished">2015-12-16</time>
 </a>
-        </div>
-    	 
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/16/hello-world/">Hello World</a>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      NSURLSession无法实现断点续传下载的问题解决
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
 
-        </div>
         <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
+      </div>
+      
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近在做一个类似网盘的项目，需要实现文件的上传和下载。<br>我自己用NSURLSession封装了一个下载工具类来使用，但是遇到了无法断点下载的问题。我们先来看看NSURLSession的暂停方法。</p>
+<pre><code>[task cancelByProducingResumeData:^(NSData * _Nullable resumeData) {  
+    self.suspendBlock = suspend;  
+    if (suspend) {  
+        self.suspendBlock(resumeData);  
+    }  
+}];  
+</code></pre><p>NSURLSession是利用NSURLSessionDownloadTask 来调用一个暂停方法，这个方法会返回一个data数据，这个数据包含了文件已下载部分的信息，我们在断点续传的时候只需要利用这个data就可以了。</p>
+<pre><code>NSURLSessionDownloadTask *task = [self.session downloadTaskWithResumeData:resumeData];  
+[task resume];      
+</code></pre><p>我发现在我执行暂停的时候拿到的这个data是空的，这就是无法断点续传的原因，那么为什么是空的呢？  我查阅了苹果的官方文档</p>
+<p><img src="http://img.blog.csdn.net/20151201114006808?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="图1"></p>
+<p>官方文档里表示必须要满足这些条件才能实现断点续传下载，问题最可能出现在第三条。 果然，我拿到的服务器响应头里并没有这两个参数<br><img src="http://img.blog.csdn.net/20151201114031544?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="图2"></p>
+<p>所以我猜想，NSURLSession应该是利用Etag或Last-modified来记录已下载的进度来实现断点续传。<br>最后，让服务器在响应头里加上这两个参数，问题完美解决。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/05/16/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
 
 </div>
       <footer id="footer">
@@ -252,8 +315,8 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false
