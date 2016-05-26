@@ -4,17 +4,21 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>于云鹏</title>
+  <title>iOS8下如何自定义收到通知时的快捷回复 | 于云鹏</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="于云鹏">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="这个功能很久之前就做出来了，最近正好有空可以梳理一下。首先，我们要知道对于iOS8的通知我们可以做些什么，目前我们可以在注册iOS8通知的时候给不同类型通知加入对应的Action方法，也就是说一些简单地操作不用打开app就可以完成。比如说社交类应用收到一条消息，可以直接利用Action回复“OK”、“收到”之类的快捷短语。  手机qq就曾经加入过两个表情作为快捷回复，不知为何后来的版本取消了。
+这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS8下如何自定义收到通知时的快捷回复">
+<meta property="og:url" content="http://yoursite.com/2015/05/15/ iOS8下如何自定义收到通知时的快捷回复/index.html">
 <meta property="og:site_name" content="于云鹏">
-<meta property="og:description">
+<meta property="og:description" content="这个功能很久之前就做出来了，最近正好有空可以梳理一下。首先，我们要知道对于iOS8的通知我们可以做些什么，目前我们可以在注册iOS8通知的时候给不同类型通知加入对应的Action方法，也就是说一些简单地操作不用打开app就可以完成。比如说社交类应用收到一条消息，可以直接利用Action回复“OK”、“收到”之类的快捷短语。  手机qq就曾经加入过两个表情作为快捷回复，不知为何后来的版本取消了。
+这">
+<meta property="og:updated_time" content="2016-05-26T14:07:15.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="于云鹏">
-<meta name="twitter:description">
+<meta name="twitter:title" content="iOS8下如何自定义收到通知时的快捷回复">
+<meta name="twitter:description" content="这个功能很久之前就做出来了，最近正好有空可以梳理一下。首先，我们要知道对于iOS8的通知我们可以做些什么，目前我们可以在注册iOS8通知的时候给不同类型通知加入对应的Action方法，也就是说一些简单地操作不用打开app就可以完成。比如说社交类应用收到一条消息，可以直接利用Action回复“OK”、“收到”之类的快捷短语。  手机qq就曾经加入过两个表情作为快捷回复，不知为何后来的版本取消了。
+这">
   
     <link rel="alternative" href="/atom.xml" title="于云鹏" type="application/atom+xml">
   
@@ -184,149 +188,7 @@
 	</div>
 </nav>
 
-      <div class="body-wrap">
-  
-    <article id="post-NSURLSession无法实现断点续传下载的问题解决" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/12/16/NSURLSession无法实现断点续传下载的问题解决/" class="article-date">
-  	<time datetime="2015-12-16T13:16:23.000Z" itemprop="datePublished">2015-12-16</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/16/NSURLSession无法实现断点续传下载的问题解决/">NSURLSession无法实现断点续传下载的问题解决</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近在做一个类似网盘的项目，需要实现文件的上传和下载。<br>我自己用NSURLSession封装了一个下载工具类来使用，但是遇到了无法断点下载的问题。我们先来看看NSURLSession的暂停方法。</p>
-<pre><code>[task cancelByProducingResumeData:^(NSData * _Nullable resumeData) {  
-    self.suspendBlock = suspend;  
-    if (suspend) {  
-        self.suspendBlock(resumeData);  
-    }  
-}];  
-</code></pre><p>NSURLSession是利用NSURLSessionDownloadTask 来调用一个暂停方法，这个方法会返回一个data数据，这个数据包含了文件已下载部分的信息，我们在断点续传的时候只需要利用这个data就可以了。</p>
-<pre><code>NSURLSessionDownloadTask *task = [self.session downloadTaskWithResumeData:resumeData];  
-[task resume];      
-</code></pre><p>我发现在我执行暂停的时候拿到的这个data是空的，这就是无法断点续传的原因，那么为什么是空的呢？  我查阅了苹果的官方文档</p>
-<p><img src="http://img.blog.csdn.net/20151201114006808?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="图1"></p>
-<p>官方文档里表示必须要满足这些条件才能实现断点续传下载，问题最可能出现在第三条。 果然，我拿到的服务器响应头里并没有这两个参数<br><img src="http://img.blog.csdn.net/20151201114031544?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="图2"></p>
-<p>所以我猜想，NSURLSession应该是利用Etag或Last-modified来记录已下载的进度来实现断点续传。<br>最后，让服务器在响应头里加上这两个参数，问题完美解决。</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-使用runtime把导航栏的pop手势区域扩展至全局" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/05/26/使用runtime把导航栏的pop手势区域扩展至全局/" class="article-date">
-  	<time datetime="2015-05-26T13:49:44.000Z" itemprop="datePublished">2015-05-26</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/05/26/使用runtime把导航栏的pop手势区域扩展至全局/">使用runtime把导航栏的pop手势区域扩展至全局</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>随着手机屏幕越来越大，软件左上角的返回按钮越来越难点到，导航栏自带的pop手势也必须从屏幕左边缘触发，现在介绍一种最简单的扩展pop手势区域的方法。你只需要继承<br>UINavigationController，然后在viewdidload里加上下面这段代码</p>
-<pre><code>UIGestureRecognizer *gesture = self.interactivePopGestureRecognizer;  
-   gesture.enabled = NO;  
-   UIView *gestureView = gesture.view;  
-   UIPanGestureRecognizer *popRecognizer = [[UIPanGestureRecognizer alloc] init];  
-   popRecognizer.delegate = weakSelf;  
-   popRecognizer.maximumNumberOfTouches = 1;  
-   [gestureView addGestureRecognizer:popRecognizer];  
-
-
-   NSMutableArray *_targets = [gesture valueForKey:@&quot;_targets&quot;];  
-   id gestureRecognizerTarget = [_targets firstObject];  
-   id navigationInteractiveTransition = [gestureRecognizerTarget valueForKey:@&quot;_target&quot;];  
-   SEL handleTransition = NSSelectorFromString(@&quot;handleNavigationTransition:&quot;);  
-   [popRecognizer addTarget:navigationInteractiveTransition action:handleTransition];
-</code></pre><p>现在就可以实现手势了，但是如果当前页面为根视图还是会有bug，再加上下面的代码判断导航栏的栈里只有一个视图则不触发方法</p>
-<pre><code>- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer  
-{  
-
-return self.viewControllers.count != 1 &amp;&amp; ![[self valueForKey:@&quot;_isTransitioning&quot;] boolValue];  
-}
-</code></pre><p>大功告成  </p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post- iOS8下如何自定义收到通知时的快捷回复" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post- iOS8下如何自定义收到通知时的快捷回复" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2015/05/15/ iOS8下如何自定义收到通知时的快捷回复/" class="article-date">
@@ -342,12 +204,19 @@ return self.viewControllers.count != 1 &amp;&amp; ![[self valueForKey:@&quot;_is
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/05/15/ iOS8下如何自定义收到通知时的快捷回复/">iOS8下如何自定义收到通知时的快捷回复</a>
+    <h1 class="article-title" itemprop="name">
+      iOS8下如何自定义收到通知时的快捷回复
     </h1>
   
 
       </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
       
     
     <div class="article-entry" itemprop="articleBody">
@@ -584,20 +453,44 @@ NSString *str = self.replyArr[fromIndexPath.row];
       
     </div>
     
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/05/26/使用runtime把导航栏的pop手势区域扩展至全局/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          使用runtime把导航栏的pop手势区域扩展至全局
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
   
 </article>
 
 
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
 
 
@@ -605,8 +498,7 @@ NSString *str = self.replyArr[fromIndexPath.row];
 
 
 
-  
-  
+
 </div>
       <footer id="footer">
   <div class="outer">
@@ -630,8 +522,8 @@ NSString *str = self.replyArr[fromIndexPath.row];
 		fancybox: true,
 		mathjax: true,
 		animate: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
