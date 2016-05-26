@@ -4,17 +4,21 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Archives: 2016/5 | 于云鹏</title>
+  <title>使用runtime把导航栏的pop手势区域扩展至全局 | 于云鹏</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="于云鹏">
-<meta property="og:url" content="http://yoursite.com/archives/2016/05/index.html">
+  <meta name="description" content="随着手机屏幕越来越大，软件左上角的返回按钮越来越难点到，导航栏自带的pop手势也必须从屏幕左边缘触发，现在介绍一种最简单的扩展pop手势区域的方法。你只需要继承UINavigationController，然后在viewdidload里加上下面这段代码
+UIGestureRecognizer *gesture = self.interactivePopGestureRecognizer;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用runtime把导航栏的pop手势区域扩展至全局">
+<meta property="og:url" content="http://yoursite.com/2015/05/26/使用runtime把导航栏的pop手势区域扩展至全局/index.html">
 <meta property="og:site_name" content="于云鹏">
-<meta property="og:description">
+<meta property="og:description" content="随着手机屏幕越来越大，软件左上角的返回按钮越来越难点到，导航栏自带的pop手势也必须从屏幕左边缘触发，现在介绍一种最简单的扩展pop手势区域的方法。你只需要继承UINavigationController，然后在viewdidload里加上下面这段代码
+UIGestureRecognizer *gesture = self.interactivePopGestureRecognizer;">
+<meta property="og:updated_time" content="2016-05-26T13:52:34.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="于云鹏">
-<meta name="twitter:description">
+<meta name="twitter:title" content="使用runtime把导航栏的pop手势区域扩展至全局">
+<meta name="twitter:description" content="随着手机屏幕越来越大，软件左上角的返回按钮越来越难点到，导航栏自带的pop手势也必须从屏幕左边缘触发，现在介绍一种最简单的扩展pop手势区域的方法。你只需要继承UINavigationController，然后在viewdidload里加上下面这段代码
+UIGestureRecognizer *gesture = self.interactivePopGestureRecognizer;">
   
     <link rel="alternative" href="/atom.xml" title="于云鹏" type="application/atom+xml">
   
@@ -184,49 +188,110 @@
 	</div>
 </nav>
 
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-使用runtime把导航栏的pop手势区域扩展至全局" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/05/16/hello-world/" class="archive-article-date">
-  	<time datetime="2016-05-16T12:51:24.000Z" itemprop="datePublished">May 16</time>
+    <div class="article-meta">
+      <a href="/2015/05/26/使用runtime把导航栏的pop手势区域扩展至全局/" class="article-date">
+  	<time datetime="2015-05-26T13:49:44.000Z" itemprop="datePublished">2015-05-26</time>
 </a>
-        </div>
-    	 
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/16/hello-world/">Hello World</a>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      使用runtime把导航栏的pop手势区域扩展至全局
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
 
-        </div>
         <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
+      </div>
+      
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>随着手机屏幕越来越大，软件左上角的返回按钮越来越难点到，导航栏自带的pop手势也必须从屏幕左边缘触发，现在介绍一种最简单的扩展pop手势区域的方法。你只需要继承<br>UINavigationController，然后在viewdidload里加上下面这段代码</p>
+<pre><code>UIGestureRecognizer *gesture = self.interactivePopGestureRecognizer;  
+   gesture.enabled = NO;  
+   UIView *gestureView = gesture.view;  
+   UIPanGestureRecognizer *popRecognizer = [[UIPanGestureRecognizer alloc] init];  
+   popRecognizer.delegate = weakSelf;  
+   popRecognizer.maximumNumberOfTouches = 1;  
+   [gestureView addGestureRecognizer:popRecognizer];  
+
+
+   NSMutableArray *_targets = [gesture valueForKey:@&quot;_targets&quot;];  
+   id gestureRecognizerTarget = [_targets firstObject];  
+   id navigationInteractiveTransition = [gestureRecognizerTarget valueForKey:@&quot;_target&quot;];  
+   SEL handleTransition = NSSelectorFromString(@&quot;handleNavigationTransition:&quot;);  
+   [popRecognizer addTarget:navigationInteractiveTransition action:handleTransition];
+</code></pre><p>现在就可以实现手势了，但是如果当前页面为根视图还是会有bug，再加上下面的代码判断导航栏的栈里只有一个视图则不触发方法</p>
+<pre><code>- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer  
+{  
+
+return self.viewControllers.count != 1 &amp;&amp; ![[self valueForKey:@&quot;_isTransitioning&quot;] boolValue];  
+}
+</code></pre><p>大功告成  </p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/12/16/NSURLSession无法实现断点续传下载的问题解决/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          NSURLSession无法实现断点续传下载的问题解决
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+
 
 </div>
       <footer id="footer">
@@ -252,8 +317,8 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false

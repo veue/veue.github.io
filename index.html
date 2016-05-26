@@ -186,67 +186,6 @@
 
       <div class="body-wrap">
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/16/hello-world/" class="article-date">
-  	<time datetime="2016-05-16T12:51:24.000Z" itemprop="datePublished">2016-05-16</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/16/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-NSURLSession无法实现断点续传下载的问题解决" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -287,6 +226,80 @@
 <p><img src="http://img.blog.csdn.net/20151201114006808?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="图1"></p>
 <p>官方文档里表示必须要满足这些条件才能实现断点续传下载，问题最可能出现在第三条。 果然，我拿到的服务器响应头里并没有这两个参数<br><img src="http://img.blog.csdn.net/20151201114031544?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="图2"></p>
 <p>所以我猜想，NSURLSession应该是利用Etag或Last-modified来记录已下载的进度来实现断点续传。<br>最后，让服务器在响应头里加上这两个参数，问题完美解决。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-使用runtime把导航栏的pop手势区域扩展至全局" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/05/26/使用runtime把导航栏的pop手势区域扩展至全局/" class="article-date">
+  	<time datetime="2015-05-26T13:49:44.000Z" itemprop="datePublished">2015-05-26</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/05/26/使用runtime把导航栏的pop手势区域扩展至全局/">使用runtime把导航栏的pop手势区域扩展至全局</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>随着手机屏幕越来越大，软件左上角的返回按钮越来越难点到，导航栏自带的pop手势也必须从屏幕左边缘触发，现在介绍一种最简单的扩展pop手势区域的方法。你只需要继承<br>UINavigationController，然后在viewdidload里加上下面这段代码</p>
+<pre><code>UIGestureRecognizer *gesture = self.interactivePopGestureRecognizer;  
+   gesture.enabled = NO;  
+   UIView *gestureView = gesture.view;  
+   UIPanGestureRecognizer *popRecognizer = [[UIPanGestureRecognizer alloc] init];  
+   popRecognizer.delegate = weakSelf;  
+   popRecognizer.maximumNumberOfTouches = 1;  
+   [gestureView addGestureRecognizer:popRecognizer];  
+
+
+   NSMutableArray *_targets = [gesture valueForKey:@&quot;_targets&quot;];  
+   id gestureRecognizerTarget = [_targets firstObject];  
+   id navigationInteractiveTransition = [gestureRecognizerTarget valueForKey:@&quot;_target&quot;];  
+   SEL handleTransition = NSSelectorFromString(@&quot;handleNavigationTransition:&quot;);  
+   [popRecognizer addTarget:navigationInteractiveTransition action:handleTransition];
+</code></pre><p>现在就可以实现手势了，但是如果当前页面为根视图还是会有bug，再加上下面的代码判断导航栏的栈里只有一个视图则不触发方法</p>
+<pre><code>- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer  
+{  
+
+return self.viewControllers.count != 1 &amp;&amp; ![[self valueForKey:@&quot;_isTransitioning&quot;] boolValue];  
+}
+</code></pre><p>大功告成  </p>
 
       
     </div>
