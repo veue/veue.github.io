@@ -186,6 +186,104 @@
 
       <div class="body-wrap">
   
+    <article id="post-iOS 日常工作之常用宏定义大全" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/24/iOS 日常工作之常用宏定义大全/" class="article-date">
+  	<time datetime="2016-08-24T09:18:50.000Z" itemprop="datePublished">2016-08-24</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/24/iOS 日常工作之常用宏定义大全/">iOS 日常工作之常用宏定义大全</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.获取屏幕宽度与高度</p>
+<pre><code>#define SCREEN_WIDTH   [UIScreen mainScreen].bounds.size.width
+#define SCREENH_HEIGHT [UIScreen         mainScreen].bounds.size.height
+</code></pre><p>2.获取通知中心</p>
+<pre><code>#define LRNotificationCenter [NSNotificationCenter defaultCenter]
+</code></pre><p>3.设置随机颜色</p>
+<pre><code>#define LRRandomColor [UIColor colorWithRed:arc4random_uniform(256)/255.0 green:arc4random_uniform(256)/255.0 blue:arc4random_uniform(256)/255.0 alpha:1.0]
+</code></pre><p>4.设置RGB颜色/设置RGBA颜色</p>
+<pre><code>#define LRRGBColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
+#define LRRGBAColor(r, g, b, a) [UIColor colorWithRed:(r)/255.0 green:(r)/255.0 blue:(r)/255.0 alpha:a]
+// clear背景颜色
+#define LRClearColor [UIColor clearColor]
+</code></pre><p>5.自定义高效率的 NSLog</p>
+<p>项目开发中，我们会在许多地方加上Log，但是发布的时候又不想用这些Log，我们也不可能一个一个的删除，所以自定义Log是必然的！</p>
+<pre><code>#ifdef DEBUG
+#define LRLog(...) NSLog(@&quot;%s 第%d行 \n %@\n\n&quot;,__func__,__LINE__,[NSString stringWithFormat:__VA_ARGS__])
+#else
+#define LRLog(...)
+
+#endif
+</code></pre><p>6.弱引用/强引用</p>
+<pre><code>#define LRWeakSelf(type)  __weak typeof(type) weak##type = type;
+#define LRStrongSelf(type)  __strong typeof(type) type = weak##type;
+</code></pre><p>7.获取view的frame/图片资源</p>
+<pre><code>//#define kGetViewWidth(view)  view.frame.size.width
+//#define kGetViewHeight(view) view.frame.size.height
+//#define kGetViewX(view)      view.frame.origin.x
+//#define kGetViewY(view)      view.frame.origin.y
+
+//获取图片资源
+#define kGetImage(imageName) [UIImage imageNamed:[NSString stringWithFormat:@&quot;%@&quot;,imageName]]
+</code></pre><p>8.使用 ARC 和 MRC</p>
+<pre><code>#if __has_feature(objc_arc)
+// ARC
+#else
+// MRC
+#endif
+</code></pre><p>9.沙盒目录文件</p>
+<pre><code>//获取temp
+#define kPathTemp NSTemporaryDirectory()
+
+//获取沙盒 Document
+#define kPathDocument [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
+
+//获取沙盒 Cache
+#define kPathCache [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject]
+</code></pre>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-Block入门" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">

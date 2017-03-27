@@ -4,17 +4,30 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Archives: 2016 | 于云鹏</title>
+  <title>iOS 日常工作之常用宏定义大全 | 于云鹏</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="于云鹏">
-<meta property="og:url" content="http://yoursite.com/archives/2016/index.html">
+  <meta name="description" content="1.获取屏幕宽度与高度
+#define SCREEN_WIDTH   [UIScreen mainScreen].bounds.size.width
+#define SCREENH_HEIGHT [UIScreen         mainScreen].bounds.size.height
+2.获取通知中心
+#define LRNotificationCenter [NSNotification">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 日常工作之常用宏定义大全">
+<meta property="og:url" content="http://yoursite.com/2016/08/24/iOS 日常工作之常用宏定义大全/index.html">
 <meta property="og:site_name" content="于云鹏">
-<meta property="og:description">
+<meta property="og:description" content="1.获取屏幕宽度与高度
+#define SCREEN_WIDTH   [UIScreen mainScreen].bounds.size.width
+#define SCREENH_HEIGHT [UIScreen         mainScreen].bounds.size.height
+2.获取通知中心
+#define LRNotificationCenter [NSNotification">
+<meta property="og:updated_time" content="2017-03-27T08:57:23.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="于云鹏">
-<meta name="twitter:description">
+<meta name="twitter:title" content="iOS 日常工作之常用宏定义大全">
+<meta name="twitter:description" content="1.获取屏幕宽度与高度
+#define SCREEN_WIDTH   [UIScreen mainScreen].bounds.size.width
+#define SCREENH_HEIGHT [UIScreen         mainScreen].bounds.size.height
+2.获取通知中心
+#define LRNotificationCenter [NSNotification">
   
     <link rel="alternative" href="/atom.xml" title="于云鹏" type="application/atom+xml">
   
@@ -184,76 +197,130 @@
 	</div>
 </nav>
 
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-iOS 日常工作之常用宏定义大全" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/24/iOS 日常工作之常用宏定义大全/" class="archive-article-date">
-  	<time datetime="2016-08-24T09:18:50.000Z" itemprop="datePublished">Aug 24</time>
+    <div class="article-meta">
+      <a href="/2016/08/24/iOS 日常工作之常用宏定义大全/" class="article-date">
+  	<time datetime="2016-08-24T09:18:50.000Z" itemprop="datePublished">2016-08-24</time>
 </a>
-        </div>
-    	 
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/24/iOS 日常工作之常用宏定义大全/">iOS 日常工作之常用宏定义大全</a>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS 日常工作之常用宏定义大全
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
 
-        </div>
         <div class="clearfix"></div>
-    </header>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.获取屏幕宽度与高度</p>
+<pre><code>#define SCREEN_WIDTH   [UIScreen mainScreen].bounds.size.width
+#define SCREENH_HEIGHT [UIScreen         mainScreen].bounds.size.height
+</code></pre><p>2.获取通知中心</p>
+<pre><code>#define LRNotificationCenter [NSNotificationCenter defaultCenter]
+</code></pre><p>3.设置随机颜色</p>
+<pre><code>#define LRRandomColor [UIColor colorWithRed:arc4random_uniform(256)/255.0 green:arc4random_uniform(256)/255.0 blue:arc4random_uniform(256)/255.0 alpha:1.0]
+</code></pre><p>4.设置RGB颜色/设置RGBA颜色</p>
+<pre><code>#define LRRGBColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
+#define LRRGBAColor(r, g, b, a) [UIColor colorWithRed:(r)/255.0 green:(r)/255.0 blue:(r)/255.0 alpha:a]
+// clear背景颜色
+#define LRClearColor [UIColor clearColor]
+</code></pre><p>5.自定义高效率的 NSLog</p>
+<p>项目开发中，我们会在许多地方加上Log，但是发布的时候又不想用这些Log，我们也不可能一个一个的删除，所以自定义Log是必然的！</p>
+<pre><code>#ifdef DEBUG
+#define LRLog(...) NSLog(@&quot;%s 第%d行 \n %@\n\n&quot;,__func__,__LINE__,[NSString stringWithFormat:__VA_ARGS__])
+#else
+#define LRLog(...)
+
+#endif
+</code></pre><p>6.弱引用/强引用</p>
+<pre><code>#define LRWeakSelf(type)  __weak typeof(type) weak##type = type;
+#define LRStrongSelf(type)  __strong typeof(type) type = weak##type;
+</code></pre><p>7.获取view的frame/图片资源</p>
+<pre><code>//#define kGetViewWidth(view)  view.frame.size.width
+//#define kGetViewHeight(view) view.frame.size.height
+//#define kGetViewX(view)      view.frame.origin.x
+//#define kGetViewY(view)      view.frame.origin.y
+
+//获取图片资源
+#define kGetImage(imageName) [UIImage imageNamed:[NSString stringWithFormat:@&quot;%@&quot;,imageName]]
+</code></pre><p>8.使用 ARC 和 MRC</p>
+<pre><code>#if __has_feature(objc_arc)
+// ARC
+#else
+// MRC
+#endif
+</code></pre><p>9.沙盒目录文件</p>
+<pre><code>//获取temp
+#define kPathTemp NSTemporaryDirectory()
+
+//获取沙盒 Document
+#define kPathDocument [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]
+
+//获取沙盒 Cache
+#define kPathCache [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject]
+</code></pre>
+      
+    </div>
+    
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/04/16/Block入门/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Block入门</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/04/16/Block入门/" class="archive-article-date">
-  	<time datetime="2016-04-16T13:16:23.000Z" itemprop="datePublished">Apr 16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/04/16/Block入门/">Block入门</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
-    
+
+
+
+
+
+
 
 </div>
       <footer id="footer">
@@ -279,8 +346,8 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false
