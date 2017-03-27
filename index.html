@@ -186,6 +186,73 @@
 
       <div class="body-wrap">
   
+    <article id="post-iOS中如何UIView获取所在的UIViewController" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/02/iOS中如何UIView获取所在的UIViewController/" class="article-date">
+  	<time datetime="2016-11-02T11:34:56.000Z" itemprop="datePublished">2016-11-02</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/02/iOS中如何UIView获取所在的UIViewController/">iOS中如何UIView获取所在的UIViewController</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>工作中遇到了根据某个UIView来获取所属的UIViewController的问题，记录下。</p>
+<h2 id="UIResponder"><a href="#UIResponder" class="headerlink" title="UIResponder"></a>UIResponder</h2><p>1.在UIKit中，UIApplication、UIView、UIViewController这几个类都是直接继承自UIResponder类。因此UIKit中的视图、控件、视图控制器，以及我们自定义的视图及视图控制器都有响应事件的能力。这些对象通常被称为响应对象，或者是响应者(以下我们统一使用响应者)。</p>
+<p>2.视图、视图控制器、窗口对象和app对象都能处理事件。另外需要注意的是，手势也会影响到事件的传递。</p>
+<p>3.Responder Chain 大概的传递规则就是从视图顶层的UIView向下到UIViewController再到RootViewController再到Window最后到Application。</p>
+<p>实现方式</p>
+<pre><code>id responder = self.nextResponder;
+while (![responder isKindOfClass: [UIViewController class]] &amp;&amp; ![responder isKindOfClass: [UIWindow class]])
+ {
+    responder = [responder nextResponder];
+}
+if ([responder isKindOfClass: [UIViewController class]])
+{
+    // responder就是view所在的控制器
+    // do something
+}
+</code></pre>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-iOS 日常工作之常用宏定义大全" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">

@@ -4,17 +4,21 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Archives: 2016 | 于云鹏</title>
+  <title>iOS中如何UIView获取所在的UIViewController | 于云鹏</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="于云鹏">
-<meta property="og:url" content="http://yoursite.com/archives/2016/index.html">
+  <meta name="description" content="工作中遇到了根据某个UIView来获取所属的UIViewController的问题，记录下。
+UIResponder1.在UIKit中，UIApplication、UIView、UIViewController这几个类都是直接继承自UIResponder类。因此UIKit中的视图、控件、视图控制器，以及我们自定义的视图及视图控制器都有响应事件的能力。这些对象通常被称为响应对象，或者是响应者(以下我">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS中如何UIView获取所在的UIViewController">
+<meta property="og:url" content="http://yoursite.com/2016/11/02/iOS中如何UIView获取所在的UIViewController/index.html">
 <meta property="og:site_name" content="于云鹏">
-<meta property="og:description">
+<meta property="og:description" content="工作中遇到了根据某个UIView来获取所属的UIViewController的问题，记录下。
+UIResponder1.在UIKit中，UIApplication、UIView、UIViewController这几个类都是直接继承自UIResponder类。因此UIKit中的视图、控件、视图控制器，以及我们自定义的视图及视图控制器都有响应事件的能力。这些对象通常被称为响应对象，或者是响应者(以下我">
+<meta property="og:updated_time" content="2017-03-27T09:02:50.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="于云鹏">
-<meta name="twitter:description">
+<meta name="twitter:title" content="iOS中如何UIView获取所在的UIViewController">
+<meta name="twitter:description" content="工作中遇到了根据某个UIView来获取所属的UIViewController的问题，记录下。
+UIResponder1.在UIKit中，UIApplication、UIView、UIViewController这几个类都是直接继承自UIResponder类。因此UIKit中的视图、控件、视图控制器，以及我们自定义的视图及视图控制器都有响应事件的能力。这些对象通常被称为响应对象，或者是响应者(以下我">
   
     <link rel="alternative" href="/atom.xml" title="于云鹏" type="application/atom+xml">
   
@@ -184,103 +188,99 @@
 	</div>
 </nav>
 
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-iOS中如何UIView获取所在的UIViewController" class="article article-type-post" itemscope itemprop="blogPost">
   
+    <div class="article-meta">
+      <a href="/2016/11/02/iOS中如何UIView获取所在的UIViewController/" class="article-date">
+  	<time datetime="2016-11-02T11:34:56.000Z" itemprop="datePublished">2016-11-02</time>
+</a>
+    </div>
   
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS中如何UIView获取所在的UIViewController
+    </h1>
+  
+
+      </header>
       
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/11/02/iOS中如何UIView获取所在的UIViewController/" class="archive-article-date">
-  	<time datetime="2016-11-02T11:34:56.000Z" itemprop="datePublished">Nov 2</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/11/02/iOS中如何UIView获取所在的UIViewController/">iOS中如何UIView获取所在的UIViewController</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>工作中遇到了根据某个UIView来获取所属的UIViewController的问题，记录下。</p>
+<h2 id="UIResponder"><a href="#UIResponder" class="headerlink" title="UIResponder"></a>UIResponder</h2><p>1.在UIKit中，UIApplication、UIView、UIViewController这几个类都是直接继承自UIResponder类。因此UIKit中的视图、控件、视图控制器，以及我们自定义的视图及视图控制器都有响应事件的能力。这些对象通常被称为响应对象，或者是响应者(以下我们统一使用响应者)。</p>
+<p>2.视图、视图控制器、窗口对象和app对象都能处理事件。另外需要注意的是，手势也会影响到事件的传递。</p>
+<p>3.Responder Chain 大概的传递规则就是从视图顶层的UIView向下到UIViewController再到RootViewController再到Window最后到Application。</p>
+<p>实现方式</p>
+<pre><code>id responder = self.nextResponder;
+while (![responder isKindOfClass: [UIViewController class]] &amp;&amp; ![responder isKindOfClass: [UIWindow class]])
+ {
+    responder = [responder nextResponder];
+}
+if ([responder isKindOfClass: [UIViewController class]])
+{
+    // responder就是view所在的控制器
+    // do something
+}
+</code></pre>
+      
+    </div>
+    
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/08/24/iOS 日常工作之常用宏定义大全/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iOS 日常工作之常用宏定义大全</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/24/iOS 日常工作之常用宏定义大全/" class="archive-article-date">
-  	<time datetime="2016-08-24T09:18:50.000Z" itemprop="datePublished">Aug 24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/24/iOS 日常工作之常用宏定义大全/">iOS 日常工作之常用宏定义大全</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/04/16/Block入门/" class="archive-article-date">
-  	<time datetime="2016-04-16T13:16:23.000Z" itemprop="datePublished">Apr 16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/04/16/Block入门/">Block入门</a>
-    </h1>
-  
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
 
-    
+
+
+
+
 
 </div>
       <footer id="footer">
@@ -306,8 +306,8 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false
